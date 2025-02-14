@@ -1,0 +1,48 @@
+name: qua2sedimo
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+dependencies:
+  - python=3.9.19
+  - pip=20.3
+  - pytorch=2.1.1
+  - pytorch-cuda=11.8 
+  - torchvision
+  - torchaudio
+  - numpy
+  - pip:
+    - accelerate==0.30.1
+    - albumentations==0.4.3
+    - beautifulsoup4
+    - clean_fid==0.1.35
+    - diffusers==0.29.0
+    - pudb==2019.2
+    - invisible-watermark
+    - imageio==2.9.0
+    - imageio-ffmpeg==0.4.2
+    - test-tube>=0.7.5
+    - streamlit>=0.73.1
+    - torchmetrics==1.5.1
+    - streamlit-drawable-canvas==0.8
+    - einops==0.3.0
+    - kornia==0.6.9
+    - lmdb==1.3.0
+    - natsort==8.3.1
+    - networkx==3.2.1
+    - omegaconf==2.1.1
+    - opencv_python
+    - opencv_python_headless
+    - pandas==1.4.2
+    - Pillow==9.0.1
+    - pytorch_lightning==1.5.0
+    - PyYAML==6.0
+    - scikit-learn
+    - sentencepiece
+    - six==1.16.0
+    - tqdm==4.64.0
+    - transformers==4.41.2
+    - omegaconf
+    - git+https://github.com/openai/CLIP.git@main#egg=clip
+    - -e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
+    - -e .
