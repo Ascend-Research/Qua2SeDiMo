@@ -30,6 +30,7 @@ The code for this paper is split into two top-level repos:
 
 Additional directories with content:
 1) `dag_plots` contains PNG images of what the PixArt, Hunyuan, DiT, SDv1.5 and SDXL denoiser architectures look like as Directed Acyclic Graphs. The PixArt and Hunyuan images cover a subset of the transformer layers due to a rendering issue with graphviz.
+2) `sample_images` contains the generated images we use in our paper's figures. 
 
 The rest of this README concerns quantized diffusion model inference and sampling quantization configurations.
 
