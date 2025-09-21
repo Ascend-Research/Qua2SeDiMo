@@ -143,5 +143,6 @@ If you find our framework useful, we kindly ask that you cite our paper:
     title = {Qua$^{2}$SeDiMo: Quantifiable Quantization Sensitivity of Diffusion Models},
     author = {Mills, Keith G. and Salameh, Mohammad and Chen, Ruichen and Hassanpour, Negar Lu, Wei and Niu, Di},
     booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
-    year={2025}
+    year={2025},
+    pages={6153-6163}
 ```
