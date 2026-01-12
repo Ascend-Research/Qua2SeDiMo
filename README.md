@@ -45,8 +45,8 @@ conda activate qua2sedimo
 ## Inference Using Quantized Denoiser Networks
 
 Inference of quantized DM denoisers requires two files:
-1) The multiquantizer `*_mq.pt` checkpoint file for a given denoiser network. These files describe the quantization methods and bit precisions for each weight layer in a given denoiser network. As such, these files are usually several gigabytes in size. For simplicity, download them from the [Google Drive](https://drive.google.com/drive/folders/19gTl00BfDaQSQMlOC_aM5MMPo6grHC_1?usp=sharing) and place in a new subdirectory labeled `/multiquantizers/`. Alternatively, generate your own checkpoints by looking at the `Generating Multiquantizer Checkpoints` section below.
-2) The file `*.pkl` file for the quantization configuration of a specific denoiser network. These configurations are found using Qua<sup>2</sup>SeDiMo predictors using the `AutoBuild` repo. We provide several key quantization configurations from our paper - download them from the [Google Drive](https://drive.google.com/drive/folders/19gTl00BfDaQSQMlOC_aM5MMPo6grHC_1?usp=sharing) and place them in a new subdirectory labeled `/quant_configs/`. For further information on how they are created, see the `AutoBuild` repository.
+1) The multiquantizer `*_mq.pt` checkpoint file for a given denoiser network. These files describe the quantization methods and bit precisions for each weight layer in a given denoiser network. As such, these files are usually several gigabytes in size. For simplicity, download them from the [HuggingFace repo](https://huggingface.co/datasets/kgmills/Qua2SeDiMo) and place in a new subdirectory labeled `/multiquantizers/`. Alternatively, generate your own checkpoints by looking at the `Generating Multiquantizer Checkpoints` section below.
+2) The file `*.pkl` file for the quantization configuration of a specific denoiser network. These configurations are found using Qua<sup>2</sup>SeDiMo predictors using the `AutoBuild` repo. We provide several key quantization configurations from our paper - download them from the [HuggingFace repo](https://huggingface.co/datasets/kgmills/Qua2SeDiMo) and place them in a new subdirectory labeled `/quant_configs/`. For further information on how they are created, see the `AutoBuild` repository.
 
 ### Text-to-Image Diffusion Transformer Inference (PixArt & Hunyuan)
 
@@ -95,7 +95,7 @@ We cast denoiser neural networks as mixed-precision search spaces where we vary 
 
 To facilitate this, we implement multiquantizer checkpoints that store the quantization information (e.g., UAQ delta, K-Means centroids) for each bit precision/method for each weight layer in the neural network. 
 
-These checkpoint files can be found on the [Google Drive](https://drive.google.com/drive/folders/19gTl00BfDaQSQMlOC_aM5MMPo6grHC_1?usp=sharing) and are several gigabytes in size. We provide instruction on how to re-create them should you so desire.<br>
+These checkpoint files can be found on the [HuggingFace repo](https://huggingface.co/datasets/kgmills/Qua2SeDiMo) and are several gigabytes in size. We provide instruction on how to re-create them should you so desire.<br>
 **Note:** Running these scripts require GPUs with large amount of VRAM (24-32GB) running for several days at a time. We use 32GB Tesla V100 GPUs.
 
 ```
@@ -109,7 +109,7 @@ python scripts/dit_multiquantizer.py
 
 This will save `*_mq.pt*` files in the `/multiquantizers/` subdirectory. 
 * **Note**: For SDXL, U-Net is too large to perform this all at once. As such, we use the `--prefix` flag to separate the U-Net into different parts (see file/command for more info) and make separate multiquantizer checkpoints, e.g., `sdxl_conv_in_mq.pt` for the `conv_in` operation for each section of the network. They can then be stitched together manually, e.g., ipython, into one single `sdxl_mq.pt` file.
-* **Note**: For SDv1.5, you will need to download the checkpoint file `v1-5-pruned-emaonly.ckpt` from the [Google Drive](https://drive.google.com/drive/folders/19gTl00BfDaQSQMlOC_aM5MMPo6grHC_1?usp=sharing) and place it in `/models/ldm/stable-diffusion-v1/`.
+* **Note**: For SDv1.5, you will need to download the checkpoint file `v1-5-pruned-emaonly.ckpt` from the [HuggingFace repo](https://huggingface.co/datasets/kgmills/Qua2SeDiMo) and place it in `/models/ldm/stable-diffusion-v1/`.
 
 ## Sampling and Evaluating Random Quantization Configurations
 
@@ -124,7 +124,7 @@ CUDA_VISIBLE_DEVICES=0 python scripts/sdv15_eval_random.py        --outdir sdv15
 CUDA_VISIBLE_DEVICES=0 python scripts/dit_eval_random.py          --outdir dit_random_seed42
 ```
 * **Note**: the prefix `CUDA_VISIBLE_DEVICES=0` is recommended as these scripts use the [clean-fid](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjw-I-sp8GLAxVOJTQIHa1eOf8QFnoECAgQAQ&url=https%3A%2F%2Fgithub.com%2FGaParmar%2Fclean-fid&usg=AOvVaw1PVbOhioog10fSfROV9OpF&opi=89978449) package to evaluate FID, which will (unnecessarily) try to make use multiple GPUs if it can.
-* **Note**: For SDv1.5, you will need to download the checkpoint file `v1-5-pruned-emaonly.ckpt` from the [Google Drive](https://drive.google.com/drive/folders/19gTl00BfDaQSQMlOC_aM5MMPo6grHC_1?usp=sharing) and place it in `/models/ldm/stable-diffusion-v1/`.
+* **Note**: For SDv1.5, you will need to download the checkpoint file `v1-5-pruned-emaonly.ckpt` from the [HuggingFace repo](https://huggingface.co/datasets/kgmills/Qua2SeDiMo) and place it in `/models/ldm/stable-diffusion-v1/`.
 
 Each script will sample and evaluate 500 (adjuatable via the `--num_archs` flag) random quantization configurations for their respective denoiser neural network. The results will be placed in the `quant_cache.pkl` file of the directory specified by the `--outdir` flag. These `.pkl` files can then be used to train Qua<sup>2</sup>SeDiMo predictors in the `AutoBuild` repo.
 
